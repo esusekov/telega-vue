@@ -1,0 +1,24 @@
+<v-layout>
+  <v-panel contextual-style="primary">
+    <h1 class="panel-title" slot="heading">
+      Login
+    </h1>
+    <div slot="body">
+      <form @submit.prevent="login(user)" novalidate>
+        <md-input-container>
+          <label>Email</label>
+          <md-input v-model="user.email" type="email"></md-input>
+        </md-input-container>
+        <md-input-container>
+          <label>Password</label>
+          <md-input v-model="user.password" type="password"></md-input>
+        </md-input-container>
+        <md-button type="submit" class="md-raised md-primary">Login</md-button>
+      </form>
+    </div>
+    <div slot="footer">
+      No account?
+      <router-link :to="{ name: 'register.index' }">Register</router-link>
+    </div>
+  </v-panel>
+</v-layout>
