@@ -5,22 +5,28 @@
  * Page where the user can login
  */
 
-import authService from './../../../services/auth';
+import api from './../../../services/api';
 
 export default {
 
   data() {
     return {
       user: {
-        email: null,
-        password: null,
+        phone: null,
+        code: null,
       },
+      phoneSent: false,
     };
   },
 
   methods: {
-    login(user) {
-      authService.login(user);
+    async submit() {
+      if (this.phoneSent) {
+        await api.signIn(this.user.code)
+      } else {
+        await api.sendCode(this.user.phone)
+        this.phoneSent = true
+      }
     },
   },
 
