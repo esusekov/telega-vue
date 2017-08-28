@@ -19,36 +19,31 @@ const server = {
 
 const client = MTProto({ server, api })
 
-let phoneNumber
-let phoneHash
-
 const sendCode = async (phone) => {
-  phoneNumber = phone
-  const { phone_code_hash: phoneCodeHash } = await client('auth.sendCode', {
+  const { phone_code_hash: phoneHash } = await client('auth.sendCode', {
     phone_number: phone,
     current_number: false,
     api_id: API_ID,
     api_hash: API_HASH,
   })
 
-  console.log('PHONE CODE HASH', phoneCodeHash)
-
-  phoneHash = phoneCodeHash
-
-  return phoneCodeHash
+  return { phone, phoneHash }
 }
 
-const signIn = async (code) => {
-  const res = await client('auth.signIn', {
-    phone_number: phoneNumber,
+const signIn = async ({ phone, phoneHash, code }) => {
+  return await client('auth.signIn', {
+    phone_number: phone,
     phone_code_hash: phoneHash,
     phone_code: code,
   })
+}
 
-  console.log('USER', res)
+const getChats = async () => {
+  return await client('messages.getChats')
 }
 
 export default {
   sendCode,
   signIn,
+  getChats,
 }

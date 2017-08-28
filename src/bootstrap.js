@@ -31,36 +31,6 @@ Object.defineProperty(Vue.prototype, '$bus', {
 
 
 /* ============
- * Axios
- * ============
- *
- * Promise based HTTP client for the browser and node.js.
- * Because Vue Resource has been retired, Axios will now been used
- * to perform AJAX-requests.
- *
- * https://github.com/mzabriskie/axios
- */
-import Axios from 'axios';
-import authService from './app/services/auth';
-
-Axios.defaults.baseURL = process.env.API_LOCATION;
-Axios.defaults.headers.common.Accept = 'application/json';
-Axios.interceptors.response.use(
-  response => response,
-  (error) => {
-    if (error.response.status === 401) {
-      authService.logout();
-    }
-  });
-Vue.$http = Axios;
-Object.defineProperty(Vue.prototype, '$http', {
-  get() {
-    return Axios;
-  },
-});
-
-
-/* ============
  * Vuex Router Sync
  * ============
  *
@@ -69,9 +39,9 @@ Object.defineProperty(Vue.prototype, '$http', {
  * https://github.com/vuejs/vuex-router-sync/blob/master/README.md
  */
 import VuexRouterSync from 'vuex-router-sync';
-import store from './app/store';
+import store from './store';
 
-store.dispatch('checkAuthentication');
+// store.dispatch('checkAuthentication');
 
 
 /* ============
@@ -84,34 +54,34 @@ store.dispatch('checkAuthentication');
  * http://router.vuejs.org/en/index.html
  */
 import VueRouter from 'vue-router';
-import routes from './app/routes';
+import routes from './routes';
 
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
   routes,
 });
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(m => m.meta.auth) && !store.state.auth.authenticated) {
-    /*
-     * If the user is not authenticated and visits
-     * a page that requires authentication, redirect to the login page
-     */
-    next({
-      name: 'login.index',
-    });
-  } else if (to.matched.some(m => m.meta.guest) && store.state.auth.authenticated) {
-    /*
-     * If the user is authenticated and visits
-     * an guest page, redirect to the dashboard page
-     */
-    next({
-      name: 'home.index',
-    });
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some(m => m.meta.auth) && !store.state.account.auth.authenticated) {
+//     /*
+//      * If the user is not authenticated and visits
+//      * a page that requires authentication, redirect to the login page
+//      */
+//     next({
+//       name: 'login.index',
+//     });
+//   } else if (to.matched.some(m => m.meta.guest) && store.state.account.auth.authenticated) {
+//     /*
+//      * If the user is authenticated and visits
+//      * an guest page, redirect to the dashboard page
+//      */
+//     next({
+//       name: 'home.index',
+//     });
+//   } else {
+//     next();
+//   }
+// });
 VuexRouterSync.sync(store, router);
 
 Vue.router = router;
@@ -126,7 +96,7 @@ Vue.router = router;
  * https://kazupon.github.io/vue-i18n/
  */
 import VueI18n from 'vue-i18n';
-import locale from './app/locale';
+import locale from './locale';
 
 Vue.use(VueI18n);
 

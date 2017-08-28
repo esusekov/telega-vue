@@ -19,26 +19,12 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
-    alias: {
-      '@': resolve('src'),
-      'src': path.resolve(__dirname, '../src'),
-      'app': path.resolve(__dirname, '../src/app'),
-      'assets': path.resolve(__dirname, '../src/assets'),
-      'components': path.resolve(__dirname, '../src/app/components'),
-      'layouts': path.resolve(__dirname, '../src/app/layouts'),
-      'locale': path.resolve(__dirname, '../src/app/locale'),
-      'mixins': path.resolve(__dirname, '../src/app/mixins'),
-      'pages': path.resolve(__dirname, '../src/app/pages'),
-      'services': path.resolve(__dirname, '../src/app/services'),
-      'store': path.resolve(__dirname, '../src/app/store'),
-      'transformers': path.resolve(__dirname, '../src/app/transformers'),
-      'utils': path.resolve(__dirname, '../src/app/utils')
-    }
+    modules: [resolve('src'), 'node_modules'],
+    extensions: ['.js', '.vue', '.json']
   },
   module: {
     rules: [
-      {
+      /*{
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
         enforce: "pre",
@@ -46,7 +32,7 @@ module.exports = {
         options: {
           formatter: require('eslint-friendly-formatter')
         }
-      },
+      },*/
       {
         test: /\.vue$/,
         loader: 'vue-loader',

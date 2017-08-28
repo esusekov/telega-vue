@@ -7,11 +7,11 @@
       <form @submit.prevent="submit()" novalidate>
         <md-input-container v-if="!phoneSent">
           <label>Phone</label>
-          <md-input v-model="user.phone" type="tel"></md-input>
+          <md-input v-model="input.phone" type="tel"></md-input>
         </md-input-container>
         <md-input-container v-if="phoneSent">
           <label>Code</label>
-          <md-input v-model="user.code" type="text"></md-input>
+          <md-input v-model="input.code" type="text"></md-input>
         </md-input-container>
         <md-button type="submit" class="md-raised md-primary">Auth</md-button>
       </form>
